@@ -49,19 +49,23 @@ First, to be able to execute graphical applications with docker, run:
 xhost +local:docker
 ```
 
+Another observation is that in order to be able to load logs or trees to Groot, or to save a tree in the host, it is necessary to use docker volumes, as it will be seen below.
+
 ### 🤖 rocker
 
 For Intel integrated graphics cards:
 
 ```bash
-rocker --devices /dev/dri/card0 --x11 --network host thunderatz/groot:latest
+rocker --devices /dev/dri/card0 --x11 --network host --volume path/to/host/logs_trees_dir:path/where/to/mount/logs_trees_dir -- thunderatz/groot:latest
 ```
 
 For NVidia GPUs:
 
 ```bash
-rocker --nvidia --x11 --network host thunderatz/groot:latest
+rocker --nvidia --x11 --network host --volume path/to/host/logs_trees_dir:path/where/to/mount/logs_trees_dir -- thunderatz/groot:latest
 ```
+
+Where `path/to/host/logs_trees_dir` is the directory in the host machine where the logs and trees will are stored and `path/where/to/mount/logs_trees_dir` is the diretory where the host directory will be mounted inside the container.
 
 ### 🐋 docker
 
@@ -75,6 +79,9 @@ docker run -it --rm \
     --env="XAUTHORITY=/tmp/.docker.xauth" \
     --volume /tmp/.docker.xauth:/tmp/.docker.xauth \
     --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    --volume path/to/host/logs_trees_dir:path/where/to/mount/logs_trees_dir \
     --network host \
     thunderatz/groot:latest
 ```
+
+Where `path/to/host/logs_trees_dir` is the directory in the host machine where the logs and trees will are stored and `path/where/to/mount/logs_trees_dir` is the diretory where the host directory will be mounted inside the container.
