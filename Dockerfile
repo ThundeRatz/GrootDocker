@@ -9,6 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     libqt5svg5-dev \
     libzmq3-dev \
     libdw-dev \
+    libncurses-dev \
     && rm -rf /var/lib/apt/lists/* \
     && git clone --recurse-submodules https://github.com/BehaviorTree/Groot.git /opt/Groot
 
